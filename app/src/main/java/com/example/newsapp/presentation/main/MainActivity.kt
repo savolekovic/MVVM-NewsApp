@@ -2,9 +2,12 @@ package com.example.newsapp.presentation.main
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
+import com.example.newsapp.domain.adapters.ArticleAdapter
 import com.example.newsapp.domain.model.Article
 import com.example.newsapp.util.DataState
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,10 +18,13 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    private lateinit var articleAdapter: ArticleAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        articleAdapter = ArticleAdapter()
         subscribeObservers()
         viewModel.getArticlesEvent()
     }
@@ -28,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             when (it) {
                 is DataState.Success<List<Article>> -> {
                     displayProgressBar(false)
-                    appendBlogTitles(it.data)
+                    updateArticlesAdapter(it.data)
                 }
                 is DataState.Error -> {
                     displayProgressBar(false)
@@ -41,19 +47,23 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun appendBlogTitles(articles: List<Article>) {
-        val sb = StringBuilder()
-        for (article in articles) {
-            sb.append(article.title + "\n")
+    private fun updateArticlesAdapter(articles: List<Article>) {
+        articleAdapter.setOnItemClickListener {
+            Toast.makeText(this, "Article clicked", Toast.LENGTH_SHORT).show()
         }
-        text.text = sb.toString()
+        articles_recycler.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = articleAdapter
+        }
+
+        articleAdapter.differ.submitList(articles)
     }
 
     private fun displayError(message: String?) {
         if (message != null) {
-            text.text = message
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
         } else {
-            text.text = "Unknown error."
+            Toast.makeText(this, "Unknown error.", Toast.LENGTH_SHORT).show()
         }
     }
 
