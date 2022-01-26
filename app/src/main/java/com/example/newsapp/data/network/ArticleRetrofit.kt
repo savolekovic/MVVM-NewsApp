@@ -9,8 +9,10 @@ interface ArticleRetrofit {
 
     @GET("v2/everything")
     suspend fun getArticles(
+        @Query("sortBy")
+        publishedAt: String = "publishedAt",
         @Query("q")
-        query: String = "a",
+        query: String = "bitcoin",
         @Query("apiKey")
         apiKey: String = API_KEY
     ): NewsResponse

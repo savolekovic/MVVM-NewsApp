@@ -1,5 +1,7 @@
 package com.example.newsapp.data.network.model
 
+import com.example.newsapp.domain.model.Source
+
 data class ArticleNetworkEntity(
     val author: String,
     val content: String,

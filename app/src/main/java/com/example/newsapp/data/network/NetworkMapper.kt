@@ -1,5 +1,6 @@
 package com.example.newsapp.data.network
 
+import com.example.newsapp.R
 import com.example.newsapp.data.network.model.ArticleNetworkEntity
 import com.example.newsapp.data.network.model.NewsResponse
 import com.example.newsapp.domain.model.Article
@@ -12,14 +13,14 @@ constructor(): EntityMapper<ArticleNetworkEntity, Article>{
 
     override fun mapFromEntity(entity: ArticleNetworkEntity): Article {
         return Article(
-            author = entity.author,
-            content = entity.content,
-            description = entity.description,
-            publishedAt = entity.publishedAt,
+            author = entity.author ?: "Unknown",
+            content = entity.content ?: "Unknown",
+            description = entity.description ?: "Unknown",
+            publishedAt = entity.publishedAt ?: "Unknown",
             source = entity.source,
-            title = entity.title,
-            url = entity.url,
-            image = entity.urlToImage
+            title = entity.title ?: "Unknown",
+            url = entity.url ?: "Unknown",
+            image = entity.urlToImage ?: "https://cdn.iconscout.com/icon/free/png-256/broken-image-1782063-1513075.png"
         )
     }
 
