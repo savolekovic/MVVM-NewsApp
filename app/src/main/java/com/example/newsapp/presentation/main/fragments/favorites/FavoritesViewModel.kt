@@ -1,7 +1,7 @@
-package com.example.newsapp.presentation.main
+package com.example.newsapp.presentation.main.fragments.favorites
 
 import androidx.lifecycle.*
-import com.example.newsapp.data.repository.MainRepository
+import com.example.newsapp.data.repository.FavoritesRepository
 import com.example.newsapp.domain.model.Article
 import com.example.newsapp.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,23 +11,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel
+class FavoritesViewModel
 @Inject
 constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val mainRepository: MainRepository
+    private val favoritesRepository: FavoritesRepository
 ) : ViewModel() {
 
     private val _dataState: MutableLiveData<DataState<List<Article>>> = MutableLiveData()
     val dataState: LiveData<DataState<List<Article>>> = _dataState
 
     fun getArticlesEvent(){
-        viewModelScope.launch {
-            mainRepository.getArticles()
-                .onEach { dataState ->
-                    _dataState.value = dataState
-                }
-                .launchIn(viewModelScope)
-        }
+
     }
 }

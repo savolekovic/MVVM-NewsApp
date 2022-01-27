@@ -8,11 +8,21 @@ import retrofit2.http.Query
 interface ArticleRetrofit {
 
     @GET("v2/everything")
-    suspend fun getArticles(
+    suspend fun getAllArticles(
         @Query("sortBy")
         publishedAt: String = "publishedAt",
         @Query("q")
-        query: String = "bitcoin",
+        query: String = "a",
+        @Query("apiKey")
+        apiKey: String = API_KEY
+    ): NewsResponse
+
+    @GET("v2/top-headlines")
+    suspend fun getBreakingNews(
+        @Query("sortBy")
+        publishedAt: String = "publishedAt",
+        @Query("country")
+        query: String = "us",
         @Query("apiKey")
         apiKey: String = API_KEY
     ): NewsResponse
