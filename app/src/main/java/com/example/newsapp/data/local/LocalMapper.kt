@@ -1,14 +1,15 @@
-package com.example.newsapp.data.network
+package com.example.newsapp.data.local
 
+import com.example.newsapp.data.network.ArticleNetworkEntity
+import com.example.newsapp.data.network.ArticlesResponse
 import com.example.newsapp.domain.entities.Article
 import com.example.newsapp.util.EntityMapper
 import javax.inject.Inject
 
-class NetworkMapper
+class LocalMapper
 @Inject
-constructor(): EntityMapper<ArticleNetworkEntity, Article>{
-
-    override fun mapFromEntity(entity: ArticleNetworkEntity): Article {
+constructor(): EntityMapper<ArticleLocalEntity, Article>{
+    override fun mapFromEntity(entity: ArticleLocalEntity): Article {
         return Article(
             author = entity.author ?: "Unknown",
             content = entity.content ?: "Unknown",
@@ -17,12 +18,12 @@ constructor(): EntityMapper<ArticleNetworkEntity, Article>{
             source = entity.source,
             title = entity.title ?: "Unknown",
             url = entity.url ?: "Unknown",
-            image = entity.urlToImage ?: "https://cdn.iconscout.com/icon/free/png-256/broken-image-1782063-1513075.png"
+            image = entity.image ?: "https://cdn.iconscout.com/icon/free/png-256/broken-image-1782063-1513075.png"
         )
     }
 
-    override fun mapToEntity(domainModel: Article): ArticleNetworkEntity {
-        return ArticleNetworkEntity(
+    override fun mapToEntity(domainModel: Article): ArticleLocalEntity {
+        return ArticleLocalEntity(
             author = domainModel.author,
             content = domainModel.content,
             description = domainModel.description,
@@ -30,11 +31,11 @@ constructor(): EntityMapper<ArticleNetworkEntity, Article>{
             source = domainModel.source,
             title = domainModel.title,
             url = domainModel.url,
-            urlToImage = domainModel.image
+            image = domainModel.image
         )
     }
 
-    fun mapFromEntityList(entities: ArticlesResponse): List<Article>{
-        return entities.articles.map { mapFromEntity(it) }
+    fun mapFromEntityList(entities: List<ArticleLocalEntity>): List<Article>{
+        return entities.map { mapFromEntity(it) }
     }
 }

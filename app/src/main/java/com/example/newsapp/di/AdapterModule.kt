@@ -26,4 +26,11 @@ object AdapterModule {
         return ArticleAdapter()
     }
 
+    @Singleton
+    @Provides
+    @Named("favorites_news")
+    fun provideFavoritesAdapter(): ArticleAdapter{
+        return ArticleAdapter()
+    }
+
 }

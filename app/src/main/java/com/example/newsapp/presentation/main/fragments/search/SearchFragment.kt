@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.databinding.FragmentSearchNewsBinding
 import com.example.newsapp.domain.adapters.ArticleAdapter
-import com.example.newsapp.domain.model.Article
+import com.example.newsapp.domain.entities.Article
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
 import com.example.newsapp.util.DataState
 import dagger.hilt.android.AndroidEntryPoint

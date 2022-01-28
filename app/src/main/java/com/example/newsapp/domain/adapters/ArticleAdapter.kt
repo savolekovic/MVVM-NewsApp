@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.ArticleItemBinding
-import com.example.newsapp.domain.model.Article
+import com.example.newsapp.domain.entities.Article
 import javax.inject.Inject
 import javax.inject.Singleton
 

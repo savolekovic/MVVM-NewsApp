@@ -1,10 +1,10 @@
 package com.example.newsapp.di
 
+import com.example.newsapp.data.local.ArticleDao
+import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.data.network.ArticleRetrofit
 import com.example.newsapp.data.network.NetworkMapper
-import com.example.newsapp.data.repository.BreakingNewsRepository
-import com.example.newsapp.data.repository.FavoritesRepository
-import com.example.newsapp.data.repository.SearchRepository
+import com.example.newsapp.data.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,30 +15,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
-    //Breaking News
     @Singleton
     @Provides
-    fun provideBreakingNewsRepository(
+    fun provideNewsRepository(
+        articleDao: ArticleDao,
         articleRetrofit: ArticleRetrofit,
+        localMapper: LocalMapper,
         networkMapper: NetworkMapper
-    ): BreakingNewsRepository{
-        return BreakingNewsRepository(articleRetrofit, networkMapper)
+    ): NewsRepository {
+        return NewsRepository(articleDao, articleRetrofit, localMapper, networkMapper)
     }
 
-    //Favorites
-    @Singleton
-    @Provides
-    fun provideFavoritesRepository(): FavoritesRepository{
-        return FavoritesRepository()
-    }
-
-    //Search
-    @Singleton
-    @Provides
-    fun provideSearchRepository(
-        articleRetrofit: ArticleRetrofit,
-        networkMapper: NetworkMapper
-    ): SearchRepository{
-        return SearchRepository(articleRetrofit, networkMapper)
-    }
 }

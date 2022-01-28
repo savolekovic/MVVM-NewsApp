@@ -1,6 +1,5 @@
 package com.example.newsapp.data.network
 
-import com.example.newsapp.data.network.model.NewsResponse
 import com.example.newsapp.util.Constants.Companion.API_KEY
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,7 +14,7 @@ interface ArticleRetrofit {
         query: String = "a",
         @Query("apiKey")
         apiKey: String = API_KEY
-    ): NewsResponse
+    ): ArticlesResponse
 
     @GET("v2/top-headlines")
     suspend fun getBreakingNews(
@@ -25,6 +24,6 @@ interface ArticleRetrofit {
         query: String = "us",
         @Query("apiKey")
         apiKey: String = API_KEY
-    ): NewsResponse
+    ): ArticlesResponse
 
 }

@@ -1,8 +1,8 @@
 package com.example.newsapp.presentation.main.fragments.favorites
 
 import androidx.lifecycle.*
-import com.example.newsapp.data.repository.FavoritesRepository
-import com.example.newsapp.domain.model.Article
+import com.example.newsapp.data.repository.NewsRepository
+import com.example.newsapp.domain.entities.Article
 import com.example.newsapp.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -15,13 +15,19 @@ class FavoritesViewModel
 @Inject
 constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val favoritesRepository: FavoritesRepository
+    private val newsRepository: NewsRepository
 ) : ViewModel() {
 
     private val _dataState: MutableLiveData<DataState<List<Article>>> = MutableLiveData()
     val dataState: LiveData<DataState<List<Article>>> = _dataState
 
     fun getArticlesEvent(){
-
+        viewModelScope.launch {
+            newsRepository.getFavorites()
+                .onEach { dataState ->
+                    _dataState.value = dataState
+                }
+                .launchIn(viewModelScope)
+        }
     }
 }

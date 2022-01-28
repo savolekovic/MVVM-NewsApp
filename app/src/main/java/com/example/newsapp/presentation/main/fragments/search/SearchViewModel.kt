@@ -1,8 +1,8 @@
 package com.example.newsapp.presentation.main.fragments.search
 
 import androidx.lifecycle.*
-import com.example.newsapp.data.repository.SearchRepository
-import com.example.newsapp.domain.model.Article
+import com.example.newsapp.data.repository.NewsRepository
+import com.example.newsapp.domain.entities.Article
 import com.example.newsapp.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -15,7 +15,7 @@ class SearchViewModel
 @Inject
 constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val searchRepository: SearchRepository
+    private val newsRepository: NewsRepository
 ) : ViewModel() {
 
     private val _dataState: MutableLiveData<DataState<List<Article>>> = MutableLiveData()
@@ -23,7 +23,7 @@ constructor(
 
     fun getArticlesEvent(){
         viewModelScope.launch {
-            searchRepository.getArticles()
+            newsRepository.getAllArticles()
                 .onEach { dataState ->
                     _dataState.value = dataState
                 }
