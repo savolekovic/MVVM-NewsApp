@@ -1,5 +1,6 @@
 package com.example.newsapp.data.repository
 
+import androidx.lifecycle.LiveData
 import com.example.newsapp.data.local.ArticleDao
 import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.data.network.ArticleRetrofit
@@ -38,17 +39,26 @@ constructor(
         }
     }
 
+    fun getFavoriteArticles() = articleDao.getArticles()
+
     suspend fun saveArticle(article: Article) {
         articleDao.insertArticle(
             localMapper.mapToEntity(article)
         )
     }
 
-    suspend fun getFavorites() = flow {
-        emit(DataState.Loading)
-        val localArticles = articleDao.getArticles()
-        val articles = localMapper.mapFromEntityList(localArticles)
-        emit(DataState.Success(articles))
+    suspend fun deleteArticle(article: Article) {
+        articleDao.deleteArticle(
+            localMapper.mapToEntity(article)
+        )
+    }
+
+    suspend fun nukeArticles(){
+        articleDao.nukeArticles()
+    }
+
+    suspend fun isArticleSaved(url: String): Int {
+        return articleDao.isArticleSaved(url)
     }
 
 }

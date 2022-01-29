@@ -1,9 +1,7 @@
 package com.example.newsapp.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface ArticleDao {
@@ -12,5 +10,15 @@ interface ArticleDao {
     suspend fun insertArticle(article: ArticleLocalEntity): Long
 
     @Query("SELECT * FROM articles")
-    suspend fun getArticles(): List<ArticleLocalEntity>
+    fun getArticles(): LiveData<List<ArticleLocalEntity>>
+
+    @Delete
+    suspend fun deleteArticle(articleLocalEntity: ArticleLocalEntity)
+
+    @Query("DELETE FROM articles")
+    suspend fun nukeArticles()
+
+    @Query("SELECT COUNT(url) FROM articles WHERE url = :url")
+    suspend fun isArticleSaved(url: String): Int
+
 }

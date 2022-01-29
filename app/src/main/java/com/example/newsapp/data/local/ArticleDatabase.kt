@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 
 @Database(
     entities = [ArticleLocalEntity::class],
-    version = 1
+    version = 5
 )
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase : RoomDatabase() {

@@ -1,6 +1,7 @@
 package com.example.newsapp.presentation.article_detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -31,9 +32,16 @@ class ArticleDetailActivity : AppCompatActivity() {
     }
 
     private fun saveArticleOnClick() {
+        viewModel.isArticleSaved.observe(this, {
+            if(it == 0){
+                viewModel.saveArticle(thisArticle)
+                Snackbar.make(binding.root, "Article saved successfully", Snackbar.LENGTH_SHORT).show()
+            }else{
+                Snackbar.make(binding.root, "Article already in favorites", Snackbar.LENGTH_SHORT).show()
+            }
+        })
         binding.saveBtn.setOnClickListener {
-            viewModel.saveArticle(thisArticle)
-            Snackbar.make(binding.root, "Article saved successfully", Snackbar.LENGTH_SHORT).show()
+            viewModel.isArticleSaved(thisArticle.url)
         }
     }
 

@@ -1,7 +1,5 @@
 package com.example.newsapp.data.local
 
-import com.example.newsapp.data.network.ArticleNetworkEntity
-import com.example.newsapp.data.network.ArticlesResponse
 import com.example.newsapp.domain.entities.Article
 import com.example.newsapp.util.EntityMapper
 import javax.inject.Inject
@@ -11,6 +9,7 @@ class LocalMapper
 constructor(): EntityMapper<ArticleLocalEntity, Article>{
     override fun mapFromEntity(entity: ArticleLocalEntity): Article {
         return Article(
+            id = entity.id,
             author = entity.author ?: "Unknown",
             content = entity.content ?: "Unknown",
             description = entity.description ?: "Unknown",
@@ -24,6 +23,7 @@ constructor(): EntityMapper<ArticleLocalEntity, Article>{
 
     override fun mapToEntity(domainModel: Article): ArticleLocalEntity {
         return ArticleLocalEntity(
+            id = domainModel.id,
             author = domainModel.author,
             content = domainModel.content,
             description = domainModel.description,

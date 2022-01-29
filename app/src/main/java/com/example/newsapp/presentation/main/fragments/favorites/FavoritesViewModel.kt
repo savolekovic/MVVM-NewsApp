@@ -5,8 +5,6 @@ import com.example.newsapp.data.repository.NewsRepository
 import com.example.newsapp.domain.entities.Article
 import com.example.newsapp.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,13 +19,17 @@ constructor(
     private val _dataState: MutableLiveData<DataState<List<Article>>> = MutableLiveData()
     val dataState: LiveData<DataState<List<Article>>> = _dataState
 
-    fun getArticlesEvent(){
-        viewModelScope.launch {
-            newsRepository.getFavorites()
-                .onEach { dataState ->
-                    _dataState.value = dataState
-                }
-                .launchIn(viewModelScope)
-        }
+    fun getFavoriteArticles() = newsRepository.getFavoriteArticles()
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        newsRepository.deleteArticle(article)
+    }
+
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        newsRepository.saveArticle(article)
+    }
+
+    fun nukeArticles() = viewModelScope.launch {
+        newsRepository.nukeArticles()
     }
 }
