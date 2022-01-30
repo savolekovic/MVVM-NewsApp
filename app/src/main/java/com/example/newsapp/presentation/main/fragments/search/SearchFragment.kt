@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,13 +15,18 @@ import com.example.newsapp.databinding.FragmentSearchNewsBinding
 import com.example.newsapp.domain.adapters.ArticleAdapter
 import com.example.newsapp.domain.entities.Article
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
+import com.example.newsapp.util.Constants.Companion.SEARCH_NEWS_DELAY
 import com.example.newsapp.util.DataState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
-class SearchFragment: Fragment() {
+class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchNewsBinding
 
@@ -38,13 +44,32 @@ class SearchFragment: Fragment() {
         binding = FragmentSearchNewsBinding.inflate(layoutInflater)
 
         subscribeObservers()
-        viewModel.getArticlesEvent()
+        setupSearchView()
 
         return binding.root
     }
 
+    private fun setupSearchView() {
+        var job: Job? = null
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+            override fun onQueryTextChange(newText: String?): Boolean {
+                job?.cancel()
+                job = MainScope().launch {
+                    delay(SEARCH_NEWS_DELAY)
+                    binding.searchView.query?.let {
+                        if (it.toString().isNotEmpty()) {
+                            viewModel.searchArticles(it.toString())
+                        }
+                    }
+                }
+                return true
+            }
+        })
+    }
+
     private fun subscribeObservers() {
-        viewModel.dataState.observe(this, {
+        viewModel.dataState.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Success<List<Article>> -> {
                     displayProgressBar(false)
@@ -58,7 +83,7 @@ class SearchFragment: Fragment() {
                     displayProgressBar(true)
                 }
             }
-        })
+        }
     }
 
     private fun updateArticlesAdapter(articles: List<Article>) {

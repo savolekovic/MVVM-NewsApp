@@ -4,4 +4,6 @@
     <string name="breaking_news">Breaking News</string>
     <string name="favorites">Favorites</string>
     <string name="search">Search</string>
+    <string name="no_saved_articles">No saved articles.</string>
+    <string name="search_articles">Search articles…</string>
 </resources>

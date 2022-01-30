@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".presentation.main.MainActivity">
 
-    <ProgressBar
-        android:id="@+id/loading"
+    <TextView
+        android:id="@+id/empty_list_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/no_saved_articles"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -19,9 +23,10 @@
         android:id="@+id/articles_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="4dp"
+        android:paddingHorizontal="@dimen/m8"
+        android:paddingVertical="@dimen/m4"
         tools:itemCount="20"
-        tools:listitem="@layout/article_item"/>
+        tools:listitem="@layout/article_item" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

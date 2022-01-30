@@ -15,9 +15,6 @@ interface ArticleDao {
     @Delete
     suspend fun deleteArticle(articleLocalEntity: ArticleLocalEntity)
 
-    @Query("DELETE FROM articles")
-    suspend fun nukeArticles()
-
     @Query("SELECT COUNT(url) FROM articles WHERE url = :url")
     suspend fun isArticleSaved(url: String): Int
 

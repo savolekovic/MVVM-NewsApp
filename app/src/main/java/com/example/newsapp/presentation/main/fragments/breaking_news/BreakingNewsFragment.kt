@@ -44,7 +44,7 @@ class BreakingNewsFragment: Fragment() {
     }
 
     private fun subscribeObservers() {
-        viewModel.dataState.observe(this, {
+        viewModel.dataState.observe(viewLifecycleOwner) {
             when (it) {
                 is DataState.Success<List<Article>> -> {
                     displayProgressBar(false)
@@ -58,7 +58,7 @@ class BreakingNewsFragment: Fragment() {
                     displayProgressBar(true)
                 }
             }
-        })
+        }
     }
 
     private fun updateArticlesAdapter(articles: List<Article>) {

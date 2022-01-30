@@ -2,11 +2,9 @@ package com.example.newsapp.presentation.main.fragments.favorites
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -16,7 +14,6 @@ import com.example.newsapp.R
 import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.databinding.FragmentFavoritesBinding
 import com.example.newsapp.domain.adapters.ArticleAdapter
-import com.example.newsapp.domain.entities.Article
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +41,6 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     ): View {
         binding = FragmentFavoritesBinding.inflate(layoutInflater)
 
-        displayProgressBar(false)
         setupRecycler()
         subscribeObservers()
         createSwipeToDelete()
@@ -84,9 +80,13 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     }
 
     private fun subscribeObservers() {
-        viewModel.getFavoriteArticles().observe(this, {
+        viewModel.getFavoriteArticles().observe(viewLifecycleOwner) {
+            when (it.size) {
+                0 -> binding.emptyListTv.visibility = View.VISIBLE
+                else -> binding.emptyListTv.visibility = View.GONE
+            }
             articleAdapter.differ.submitList(localMapper.mapFromEntityList(it))
-        })
+        }
     }
 
     private fun setupRecycler() {
@@ -99,18 +99,5 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = articleAdapter
         }
-    }
-
-    private fun displayError(message: String?) {
-        if (message != null) {
-            Log.d("AppDebug", message)
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(requireContext(), "Unknown error.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun displayProgressBar(isDisplayed: Boolean) {
-        binding.loading.visibility = if (isDisplayed) View.VISIBLE else View.GONE
     }
 }

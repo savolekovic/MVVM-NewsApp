@@ -21,13 +21,15 @@ constructor(
     private val _dataState: MutableLiveData<DataState<List<Article>>> = MutableLiveData()
     val dataState: LiveData<DataState<List<Article>>> = _dataState
 
-    fun getArticlesEvent(){
+    fun searchArticles(query: String){
         viewModelScope.launch {
-            newsRepository.getAllArticles()
+            newsRepository.searchArticles(query)
                 .onEach { dataState ->
                     _dataState.value = dataState
                 }
                 .launchIn(viewModelScope)
         }
     }
+
+
 }

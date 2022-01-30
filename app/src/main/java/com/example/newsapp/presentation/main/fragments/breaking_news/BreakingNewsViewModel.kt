@@ -21,7 +21,7 @@ constructor(
     private val _dataState: MutableLiveData<DataState<List<Article>>> = MutableLiveData()
     val dataState: LiveData<DataState<List<Article>>> = _dataState
 
-    fun getArticlesEvent(){
+    fun getArticlesEvent() {
         viewModelScope.launch {
             newsRepository.getBreakingNews()
                 .onEach { dataState ->

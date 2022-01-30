@@ -1,6 +1,5 @@
 package com.example.newsapp.data.repository
 
-import androidx.lifecycle.LiveData
 import com.example.newsapp.data.local.ArticleDao
 import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.data.network.ArticleRetrofit
@@ -28,10 +27,10 @@ constructor(
         }
     }
 
-    suspend fun getAllArticles() = flow {
+    suspend fun searchArticles(query: String) = flow {
         emit(DataState.Loading)
         try {
-            val networkArticles = articleRetrofit.getAllArticles()
+            val networkArticles = articleRetrofit.searchArticles(query)
             val articles = networkMapper.mapFromEntityList(networkArticles)
             emit(DataState.Success(articles))
         } catch (e: Exception) {
@@ -51,10 +50,6 @@ constructor(
         articleDao.deleteArticle(
             localMapper.mapToEntity(article)
         )
-    }
-
-    suspend fun nukeArticles(){
-        articleDao.nukeArticles()
     }
 
     suspend fun isArticleSaved(url: String): Int {
