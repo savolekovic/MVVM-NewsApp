@@ -53,6 +53,7 @@ class BreakingNewsFragment : Fragment() {
                 is DataState.Success<ResponseDomain> -> {
                     displayProgressBar(false)
                     articleAdapter.differ.submitList(it.data.articles.toList())
+
                     val totalPages = it.data.totalResults / QUERY_PAGE_SIZE + 2
                     isLastPage = viewModel.breakingNewsPage == totalPages
                     if (isLastPage) {
@@ -66,7 +67,10 @@ class BreakingNewsFragment : Fragment() {
                     displayError(it.exception.message)
                 }
                 is DataState.Loading -> {
-                    displayProgressBar(true)
+                    if (viewModel.breakingNewsPage != 1) {
+                        binding.mainProgressBar.visibility = View.GONE
+                        displayProgressBar(true)
+                    }
                 }
             }
         }
@@ -96,6 +100,7 @@ class BreakingNewsFragment : Fragment() {
     }
 
     private fun displayProgressBar(isDisplayed: Boolean) {
+        binding.mainProgressBar.visibility = View.GONE
         isLoading = isDisplayed
         binding.paginationProgressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
     }

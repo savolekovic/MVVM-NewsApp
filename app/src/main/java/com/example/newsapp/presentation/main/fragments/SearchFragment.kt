@@ -34,6 +34,8 @@ class SearchFragment : Fragment() {
 
     lateinit var viewModel: NewsViewModel
 
+    private var currentQuery: String = ""
+
     @Inject
     @Named("search_news")
     lateinit var articleAdapter: ArticleAdapter
@@ -64,6 +66,7 @@ class SearchFragment : Fragment() {
                     delay(SEARCH_NEWS_DELAY)
                     binding.searchView.query?.let {
                         if (it.toString().isNotEmpty()) {
+                            currentQuery = it.toString()
                             viewModel.searchNews(it.toString(), true)
                         }
                     }
@@ -92,7 +95,11 @@ class SearchFragment : Fragment() {
                     displayError(it.exception.message)
                 }
                 is DataState.Loading -> {
-                    displayProgressBar(true)
+                    if (viewModel.breakingNewsPage == 1) {
+                        if (articleAdapter.differ.currentList.size < 1)
+                            binding.mainProgressBar.visibility = View.VISIBLE
+                    } else
+                        displayProgressBar(true)
                 }
             }
         }
@@ -128,6 +135,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun displayProgressBar(isDisplayed: Boolean) {
+        binding.mainProgressBar.visibility = View.GONE
         isLoading = isDisplayed
         binding.paginationProgressBar.visibility = if (isDisplayed) View.VISIBLE else View.GONE
     }
@@ -160,9 +168,8 @@ class SearchFragment : Fragment() {
                     isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate) {
-                binding.searchView.query?.let {
-                    viewModel.searchNews(it.toString(), false)
-                }
+                viewModel.searchNews(currentQuery, false)
+
                 isScrolling = false
             }
         }
