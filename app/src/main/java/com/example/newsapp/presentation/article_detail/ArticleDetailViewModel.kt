@@ -2,7 +2,7 @@ package com.example.newsapp.presentation.article_detail
 
 import androidx.lifecycle.*
 import com.example.newsapp.data.repository.NewsRepository
-import com.example.newsapp.domain.entities.Article
+import com.example.newsapp.domain.entities.ArticleDomainEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +18,7 @@ constructor(
     private val _isArticleSaved: MutableLiveData<Int> = MutableLiveData()
     val isArticleSaved: LiveData<Int> = _isArticleSaved
 
-    fun saveArticle(article: Article) = viewModelScope.launch {
+    fun saveArticle(article: ArticleDomainEntity) = viewModelScope.launch {
         newsRepository.saveArticle(article)
     }
 

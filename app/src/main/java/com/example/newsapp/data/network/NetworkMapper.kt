@@ -1,15 +1,16 @@
 package com.example.newsapp.data.network
 
-import com.example.newsapp.domain.entities.Article
+import com.example.newsapp.domain.entities.ArticleDomainEntity
+import com.example.newsapp.domain.entities.ResponseDomain
 import com.example.newsapp.util.EntityMapper
 import javax.inject.Inject
 
 class NetworkMapper
 @Inject
-constructor(): EntityMapper<ArticleNetworkEntity, Article>{
+constructor(): EntityMapper<ArticleNetworkEntity, ArticleDomainEntity>{
 
-    override fun mapFromEntity(entity: ArticleNetworkEntity): Article {
-        return Article(
+    override fun mapFromEntity(entity: ArticleNetworkEntity): ArticleDomainEntity {
+        return ArticleDomainEntity(
             author = entity.author ?: "Unknown",
             content = entity.content ?: "Unknown",
             description = entity.description ?: "Unknown",
@@ -21,7 +22,7 @@ constructor(): EntityMapper<ArticleNetworkEntity, Article>{
         )
     }
 
-    override fun mapToEntity(domainModel: Article): ArticleNetworkEntity {
+    override fun mapToEntity(domainModel: ArticleDomainEntity): ArticleNetworkEntity {
         return ArticleNetworkEntity(
             author = domainModel.author,
             content = domainModel.content,
@@ -34,7 +35,16 @@ constructor(): EntityMapper<ArticleNetworkEntity, Article>{
         )
     }
 
-    fun mapFromEntityList(entities: ArticlesResponse): List<Article>{
-        return entities.articles.map { mapFromEntity(it) }
+    private fun mapFromEntityList(response: ResponseNetwork): MutableList<ArticleDomainEntity>{
+        return response.articles.map { mapFromEntity(it) }.toMutableList()
     }
+
+    fun mapFromResponse(networkResponse: ResponseNetwork): ResponseDomain{
+        return ResponseDomain(
+            totalResults = networkResponse.totalResults,
+            status = networkResponse.status,
+            articles = mapFromEntityList(networkResponse)
+        )
+    }
+
 }

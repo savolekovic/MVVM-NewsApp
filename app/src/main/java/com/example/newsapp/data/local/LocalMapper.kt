@@ -1,14 +1,14 @@
 package com.example.newsapp.data.local
 
-import com.example.newsapp.domain.entities.Article
+import com.example.newsapp.domain.entities.ArticleDomainEntity
 import com.example.newsapp.util.EntityMapper
 import javax.inject.Inject
 
 class LocalMapper
 @Inject
-constructor(): EntityMapper<ArticleLocalEntity, Article>{
-    override fun mapFromEntity(entity: ArticleLocalEntity): Article {
-        return Article(
+constructor(): EntityMapper<ArticleLocalEntity, ArticleDomainEntity>{
+    override fun mapFromEntity(entity: ArticleLocalEntity): ArticleDomainEntity {
+        return ArticleDomainEntity(
             id = entity.id,
             author = entity.author ?: "Unknown",
             content = entity.content ?: "Unknown",
@@ -21,7 +21,7 @@ constructor(): EntityMapper<ArticleLocalEntity, Article>{
         )
     }
 
-    override fun mapToEntity(domainModel: Article): ArticleLocalEntity {
+    override fun mapToEntity(domainModel: ArticleDomainEntity): ArticleLocalEntity {
         return ArticleLocalEntity(
             id = domainModel.id,
             author = domainModel.author,
@@ -35,7 +35,7 @@ constructor(): EntityMapper<ArticleLocalEntity, Article>{
         )
     }
 
-    fun mapFromEntityList(entities: List<ArticleLocalEntity>): List<Article>{
+    fun mapFromEntityList(entities: List<ArticleLocalEntity>): List<ArticleDomainEntity>{
         return entities.map { mapFromEntity(it) }
     }
 }

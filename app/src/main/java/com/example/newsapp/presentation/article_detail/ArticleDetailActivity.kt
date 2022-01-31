@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.ActivityArticleDetailBinding
-import com.example.newsapp.domain.entities.Article
+import com.example.newsapp.domain.entities.ArticleDomainEntity
 import com.example.newsapp.util.extensions.formatPublishedAt
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,14 +17,14 @@ class ArticleDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityArticleDetailBinding
 
-    private lateinit var thisArticle: Article
+    private lateinit var thisArticle: ArticleDomainEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityArticleDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        thisArticle = intent.extras?.get("article") as Article
+        thisArticle = intent.extras?.get("article") as ArticleDomainEntity
 
         updateUI()
         saveArticleOnClick()

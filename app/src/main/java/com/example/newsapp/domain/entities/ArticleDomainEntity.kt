@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Article (
+data class ArticleDomainEntity (
     val id: Int? = null,
     val author: String,
     val content: String,

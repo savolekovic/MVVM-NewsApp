@@ -1,4 +1,4 @@
-package com.example.newsapp.presentation.main.fragments.favorites
+package com.example.newsapp.presentation.main.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +14,7 @@ import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.databinding.FragmentFavoritesBinding
 import com.example.newsapp.domain.adapters.ArticleAdapter
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
+import com.example.newsapp.presentation.main.MainActivity
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -28,7 +28,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     private lateinit var binding: FragmentFavoritesBinding
 
-    private val viewModel: FavoritesViewModel by viewModels()
+    lateinit var viewModel: NewsViewModel
 
     @Inject
     @Named("favorites_news")
@@ -40,6 +40,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFavoritesBinding.inflate(layoutInflater)
+
+        viewModel = (activity as MainActivity).viewModel
 
         setupRecycler()
         subscribeObservers()

@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.ArticleItemBinding
-import com.example.newsapp.domain.entities.Article
+import com.example.newsapp.domain.entities.ArticleDomainEntity
 
 class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
     class ArticleViewHolder(private val itemBinding: ArticleItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
 
-        fun bind(article: Article, onItemCLickListener: ((Article) -> Unit)?) {
+        fun bind(article: ArticleDomainEntity, onItemCLickListener: ((ArticleDomainEntity) -> Unit)?) {
             itemBinding.apply {
                 Glide.with(root).load(article.image).into(articleImg)
                 articleTitle.text = article.title
@@ -35,11 +35,11 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
         }
     }
 
-    private val differCallback = object : DiffUtil.ItemCallback<Article>() {
-        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean =
+    private val differCallback = object : DiffUtil.ItemCallback<ArticleDomainEntity>() {
+        override fun areItemsTheSame(oldItem: ArticleDomainEntity, newItem: ArticleDomainEntity): Boolean =
             oldItem.url == newItem.url
 
-        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean =
+        override fun areContentsTheSame(oldItem: ArticleDomainEntity, newItem: ArticleDomainEntity): Boolean =
             oldItem == newItem
     }
 
@@ -55,9 +55,9 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
         holder.bind(differ.currentList[position], onItemCLickListener)
     }
 
-    private var onItemCLickListener: ((Article) -> Unit)? = null
+    private var onItemCLickListener: ((ArticleDomainEntity) -> Unit)? = null
 
-    fun setOnItemClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (ArticleDomainEntity) -> Unit) {
         onItemCLickListener = listener
     }
 
