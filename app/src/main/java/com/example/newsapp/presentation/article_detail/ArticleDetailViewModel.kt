@@ -26,4 +26,8 @@ constructor(
         _isArticleSaved.value = newsRepository.isArticleSaved(url)
     }
 
+    fun deleteArticle(article: ArticleDomainEntity) = viewModelScope.launch {
+        newsRepository.deleteArticle(article)
+    }
+
 }

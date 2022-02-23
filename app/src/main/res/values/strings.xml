@@ -6,4 +6,6 @@
     <string name="search">Search</string>
     <string name="no_saved_articles">No saved articles.</string>
     <string name="search_articles">Search articles…</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>

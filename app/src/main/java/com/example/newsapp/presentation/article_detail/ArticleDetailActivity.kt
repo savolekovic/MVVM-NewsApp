@@ -1,9 +1,11 @@
 package com.example.newsapp.presentation.article_detail
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.newsapp.R
 import com.example.newsapp.databinding.ActivityArticleDetailBinding
 import com.example.newsapp.domain.entities.ArticleDomainEntity
 import com.example.newsapp.util.extensions.formatPublishedAt
@@ -37,7 +39,12 @@ class ArticleDetailActivity : AppCompatActivity() {
                 Snackbar.make(binding.root, "Article saved successfully", Snackbar.LENGTH_SHORT)
                     .show()
             } else {
-                Snackbar.make(binding.root, "Article already in favorites", Snackbar.LENGTH_SHORT)
+                AlertDialog.Builder(this)
+                    .setMessage("Remove article from favorites?")
+                    .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                        viewModel.deleteArticle(thisArticle)
+                    }
+                    .setNegativeButton(getString(R.string.cancel), null)
                     .show()
             }
         }

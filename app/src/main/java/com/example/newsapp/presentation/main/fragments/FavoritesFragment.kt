@@ -14,7 +14,8 @@ import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.databinding.FragmentFavoritesBinding
 import com.example.newsapp.domain.adapters.ArticleAdapter
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
-import com.example.newsapp.presentation.main.MainActivity
+import com.example.newsapp.presentation.main.NewsActivity
+import com.example.newsapp.presentation.main.NewsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -41,7 +42,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     ): View {
         binding = FragmentFavoritesBinding.inflate(layoutInflater)
 
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (activity as NewsActivity).viewModel
 
         setupRecycler()
         subscribeObservers()

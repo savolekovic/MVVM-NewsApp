@@ -1,4 +1,4 @@
-package com.example.newsapp.presentation.main.fragments
+package com.example.newsapp.presentation.main
 
 import android.util.Log
 import androidx.lifecycle.*

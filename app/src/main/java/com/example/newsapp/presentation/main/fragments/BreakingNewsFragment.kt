@@ -13,7 +13,8 @@ import com.example.newsapp.databinding.FragmentBreakingNewsBinding
 import com.example.newsapp.domain.adapters.ArticleAdapter
 import com.example.newsapp.domain.entities.ResponseDomain
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
-import com.example.newsapp.presentation.main.MainActivity
+import com.example.newsapp.presentation.main.NewsActivity
+import com.example.newsapp.presentation.main.NewsViewModel
 import com.example.newsapp.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsapp.util.DataState
 import com.google.android.material.snackbar.Snackbar
@@ -39,7 +40,7 @@ class BreakingNewsFragment : Fragment() {
     ): View {
         binding = FragmentBreakingNewsBinding.inflate(layoutInflater)
 
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (activity as NewsActivity).viewModel
 
         setupRecyclerView()
         subscribeObservers()

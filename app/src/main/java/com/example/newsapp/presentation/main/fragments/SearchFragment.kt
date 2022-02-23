@@ -14,7 +14,8 @@ import com.example.newsapp.databinding.FragmentSearchNewsBinding
 import com.example.newsapp.domain.adapters.ArticleAdapter
 import com.example.newsapp.domain.entities.ResponseDomain
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
-import com.example.newsapp.presentation.main.MainActivity
+import com.example.newsapp.presentation.main.NewsActivity
+import com.example.newsapp.presentation.main.NewsViewModel
 import com.example.newsapp.util.Constants
 import com.example.newsapp.util.Constants.Companion.SEARCH_NEWS_DELAY
 import com.example.newsapp.util.DataState
@@ -47,7 +48,7 @@ class SearchFragment : Fragment() {
     ): View {
         binding = FragmentSearchNewsBinding.inflate(layoutInflater)
 
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (activity as NewsActivity).viewModel
 
         setupRecyclerView()
         subscribeObservers()
