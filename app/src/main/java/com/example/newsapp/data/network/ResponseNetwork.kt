@@ -1,6 +1,6 @@
-package com.example.newsapp.data.network.model
+package com.example.newsapp.data.network
 
-data class NewsResponse(
+data class ResponseNetwork(
     val articles: List<ArticleNetworkEntity>,
     val status: String,
     val totalResults: Int

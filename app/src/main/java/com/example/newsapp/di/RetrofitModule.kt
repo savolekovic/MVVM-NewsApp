@@ -20,14 +20,14 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideGsonBuilder(): Gson{
+    fun provideGsonBuilder(): Gson {
         return GsonBuilder()
             .create()
     }
 
     @Singleton
     @Provides
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor{
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -37,7 +37,7 @@ object RetrofitModule {
     @Provides
     fun provideHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient{
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(httpLoggingInterceptor)
             .build()
@@ -48,7 +48,7 @@ object RetrofitModule {
     fun provideRetrofit(
         gson: Gson,
         okHttpClient: OkHttpClient
-    ): Retrofit.Builder{
+    ): Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
@@ -57,7 +57,7 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun provideRetrofitService(retrofit: Retrofit.Builder): ArticleRetrofit{
+    fun provideRetrofitService(retrofit: Retrofit.Builder): ArticleRetrofit {
         return retrofit
             .build()
             .create(ArticleRetrofit::class.java)

@@ -1,8 +1,11 @@
-package com.example.newsapp.domain.model
+package com.example.newsapp.domain.entities
 
-import com.example.newsapp.data.network.model.Source
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-data class Article (
+@Parcelize
+data class ArticleDomainEntity (
+    val id: Int? = null,
     val author: String,
     val content: String,
     val description: String,
@@ -11,4 +14,4 @@ data class Article (
     val title: String,
     val url: String,
     val image: String
-)
+): Parcelable

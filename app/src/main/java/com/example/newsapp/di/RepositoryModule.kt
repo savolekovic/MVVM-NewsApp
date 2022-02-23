@@ -1,8 +1,10 @@
 package com.example.newsapp.di
 
+import com.example.newsapp.data.local.ArticleDao
+import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.data.network.ArticleRetrofit
 import com.example.newsapp.data.network.NetworkMapper
-import com.example.newsapp.data.repository.MainRepository
+import com.example.newsapp.data.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,10 +17,13 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMainRepository(
+    fun provideNewsRepository(
+        articleDao: ArticleDao,
         articleRetrofit: ArticleRetrofit,
+        localMapper: LocalMapper,
         networkMapper: NetworkMapper
-    ): MainRepository{
-        return MainRepository(articleRetrofit, networkMapper)
+    ): NewsRepository {
+        return NewsRepository(articleDao, articleRetrofit, localMapper, networkMapper)
     }
+
 }
