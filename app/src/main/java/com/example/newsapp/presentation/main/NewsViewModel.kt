@@ -1,10 +1,9 @@
 package com.example.newsapp.presentation.main
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.newsapp.data.repository.NewsRepository
 import com.example.newsapp.domain.entities.ArticleDomainEntity
 import com.example.newsapp.domain.entities.ResponseDomain
+import com.example.newsapp.domain.repository.NewsRepository
 import com.example.newsapp.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -16,7 +15,6 @@ import javax.inject.Inject
 class NewsViewModel
 @Inject
 constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val newsRepository: NewsRepository
 ) : ViewModel() {
 

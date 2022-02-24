@@ -1,8 +1,8 @@
 package com.example.newsapp.presentation.article_detail
 
 import androidx.lifecycle.*
-import com.example.newsapp.data.repository.NewsRepository
 import com.example.newsapp.domain.entities.ArticleDomainEntity
+import com.example.newsapp.domain.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

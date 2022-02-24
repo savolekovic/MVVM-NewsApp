@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.databinding.FragmentBreakingNewsBinding
-import com.example.newsapp.domain.adapters.ArticleAdapter
+import com.example.newsapp.presentation.main.NewsAdapter
 import com.example.newsapp.domain.entities.ResponseDomain
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
 import com.example.newsapp.presentation.main.NewsActivity
@@ -31,7 +31,7 @@ class BreakingNewsFragment : Fragment() {
 
     @Inject
     @Named("breaking_news")
-    lateinit var articleAdapter: ArticleAdapter
+    lateinit var newsAdapter: NewsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +53,7 @@ class BreakingNewsFragment : Fragment() {
             when (it) {
                 is DataState.Success<ResponseDomain> -> {
                     displayProgressBar(false)
-                    articleAdapter.differ.submitList(it.data.articles.toList())
+                    newsAdapter.differ.submitList(it.data.articles.toList())
 
                     val totalPages = it.data.totalResults / QUERY_PAGE_SIZE + 2
                     isLastPage = viewModel.breakingNewsPage == totalPages
@@ -78,14 +78,14 @@ class BreakingNewsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        articleAdapter.setOnItemClickListener {
+        newsAdapter.setOnItemClickListener {
             val intent = Intent(requireActivity(), ArticleDetailActivity::class.java)
             intent.putExtra("article", it)
             startActivity(intent)
         }
         binding.articlesRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = articleAdapter
+            adapter = newsAdapter
             addOnScrollListener(this@BreakingNewsFragment.scrollListener)
         }
     }

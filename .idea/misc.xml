@@ -11,14 +11,21 @@
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/drawable/ic_favorite.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/drawable/ic_favorites.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/drawable/ic_search.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/drawable/round_black_border.xml" value="0.24" />
+        <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/drawable/round_blue.xml" value="0.24" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/activity_article_detail.xml" value="0.3625" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/activity_main.xml" value="0.29347826086956524" />
+        <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/activity_news.xml" value="0.1" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/article_item.xml" value="0.3625" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/fragment_blank.xml" value="0.3625" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/fragment_breaking_news.xml" value="0.3625" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/fragment_favorites.xml" value="0.3625" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/fragment_search_news.xml" value="0.4" />
+        <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/fragment_sources.xml" value="0.3625" />
+        <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/layout/source_item.xml" value="0.3625" />
         <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/menu/botom_nav_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2325" />
+        <entry key="..\:/Users/savol/Desktop/Github/mvvm-newsapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2325" />
       </map>
     </option>
   </component>

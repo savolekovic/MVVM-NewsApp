@@ -4,7 +4,8 @@ import com.example.newsapp.data.local.ArticleDao
 import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.data.network.ArticleRetrofit
 import com.example.newsapp.data.network.NetworkMapper
-import com.example.newsapp.data.repository.NewsRepository
+import com.example.newsapp.data.repository.NewsRepositoryImpl
+import com.example.newsapp.domain.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +24,18 @@ object RepositoryModule {
         localMapper: LocalMapper,
         networkMapper: NetworkMapper
     ): NewsRepository {
-        return NewsRepository(articleDao, articleRetrofit, localMapper, networkMapper)
+        return NewsRepositoryImpl(articleDao, articleRetrofit, localMapper, networkMapper)
     }
+
+//    @Provides
+//    @Singleton
+//    fun provideNoteUseCases(repository: NoteRepository): NoteUseCases {
+//        return NoteUseCases(
+//            getNotes = GetNotes(repository),
+//            deleteNote = DeleteNote(repository),
+//            addNote = AddNote(repository),
+//            getNote = GetNote(repository)
+//        )
+//    }
 
 }

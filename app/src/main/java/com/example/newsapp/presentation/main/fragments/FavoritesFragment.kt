@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.databinding.FragmentFavoritesBinding
-import com.example.newsapp.domain.adapters.ArticleAdapter
+import com.example.newsapp.presentation.main.NewsAdapter
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
 import com.example.newsapp.presentation.main.NewsActivity
 import com.example.newsapp.presentation.main.NewsViewModel
@@ -33,7 +33,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
     @Inject
     @Named("favorites_news")
-    lateinit var articleAdapter: ArticleAdapter
+    lateinit var newsAdapter: NewsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,7 +66,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val article = articleAdapter.differ.currentList[position]
+                val article = newsAdapter.differ.currentList[position]
                 viewModel.deleteArticle(article)
                 Snackbar.make(binding.root, "Successfully deleted article", Snackbar.LENGTH_LONG)
                     .apply {
@@ -88,19 +88,19 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
                 0 -> binding.emptyListTv.visibility = View.VISIBLE
                 else -> binding.emptyListTv.visibility = View.GONE
             }
-            articleAdapter.differ.submitList(localMapper.mapFromEntityList(it))
+            newsAdapter.differ.submitList(localMapper.mapFromEntityList(it))
         }
     }
 
     private fun setupRecycler() {
-        articleAdapter.setOnItemClickListener {
+        newsAdapter.setOnItemClickListener {
             val intent = Intent(requireActivity(), ArticleDetailActivity::class.java)
             intent.putExtra("article", it)
             startActivity(intent)
         }
         binding.articlesRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = articleAdapter
+            adapter = newsAdapter
         }
     }
 }

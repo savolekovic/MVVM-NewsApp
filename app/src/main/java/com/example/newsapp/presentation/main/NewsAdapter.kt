@@ -1,4 +1,4 @@
-package com.example.newsapp.domain.adapters
+package com.example.newsapp.presentation.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.newsapp.databinding.ArticleItemBinding
 import com.example.newsapp.domain.entities.ArticleDomainEntity
 
-class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     class ArticleViewHolder(private val itemBinding: ArticleItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {

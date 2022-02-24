@@ -5,18 +5,22 @@ import com.example.newsapp.data.local.LocalMapper
 import com.example.newsapp.data.network.ArticleRetrofit
 import com.example.newsapp.data.network.NetworkMapper
 import com.example.newsapp.domain.entities.ArticleDomainEntity
+import com.example.newsapp.domain.repository.NewsRepository
 import com.example.newsapp.util.DataState
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NewsRepository
-constructor(
+@Singleton
+class NewsRepositoryImpl
+@Inject constructor(
     private val articleDao: ArticleDao,
     private val articleRetrofit: ArticleRetrofit,
     private val localMapper: LocalMapper,
     private val networkMapper: NetworkMapper
-) {
+) : NewsRepository {
 
-    suspend fun getBreakingNews(breakingNewsPage: Int) = flow {
+    override suspend fun getBreakingNews(breakingNewsPage: Int) = flow {
         emit(DataState.Loading)
         try {
             val networkResponse = articleRetrofit.getBreakingNews(breakingNewsPage)
@@ -27,7 +31,7 @@ constructor(
         }
     }
 
-    suspend fun searchNews(query: String, searchNewsPage: Int) = flow {
+    override suspend fun searchNews(query: String, searchNewsPage: Int) = flow {
         emit(DataState.Loading)
         try {
             val networkResponse = articleRetrofit.searchNews(query, searchNewsPage)
@@ -38,21 +42,21 @@ constructor(
         }
     }
 
-    fun getFavoriteArticles() = articleDao.getArticles()
+    override fun getFavoriteArticles() = articleDao.getArticles()
 
-    suspend fun saveArticle(article: ArticleDomainEntity) {
+    override suspend fun saveArticle(article: ArticleDomainEntity) {
         articleDao.insertArticle(
             localMapper.mapToEntity(article)
         )
     }
 
-    suspend fun deleteArticle(article: ArticleDomainEntity) {
+    override suspend fun deleteArticle(article: ArticleDomainEntity) {
         articleDao.deleteArticle(
             localMapper.mapToEntity(article)
         )
     }
 
-    suspend fun isArticleSaved(url: String): Int {
+    override suspend fun isArticleSaved(url: String): Int {
         return articleDao.isArticleSaved(url)
     }
 

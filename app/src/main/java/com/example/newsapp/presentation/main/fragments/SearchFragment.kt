@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.databinding.FragmentSearchNewsBinding
-import com.example.newsapp.domain.adapters.ArticleAdapter
+import com.example.newsapp.presentation.main.NewsAdapter
 import com.example.newsapp.domain.entities.ResponseDomain
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
 import com.example.newsapp.presentation.main.NewsActivity
@@ -39,7 +39,7 @@ class SearchFragment : Fragment() {
 
     @Inject
     @Named("search_news")
-    lateinit var articleAdapter: ArticleAdapter
+    lateinit var newsAdapter: NewsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,7 +82,7 @@ class SearchFragment : Fragment() {
             when (it) {
                 is DataState.Success<ResponseDomain> -> {
                     displayProgressBar(false)
-                    articleAdapter.differ.submitList(it.data.articles.toList())
+                    newsAdapter.differ.submitList(it.data.articles.toList())
                     val totalPages = it.data.totalResults / Constants.QUERY_PAGE_SIZE + 2
                     isLastPage = viewModel.breakingNewsPage == totalPages
                     if (isLastPage) {
@@ -97,7 +97,7 @@ class SearchFragment : Fragment() {
                 }
                 is DataState.Loading -> {
                     if (viewModel.breakingNewsPage == 1) {
-                        if (articleAdapter.differ.currentList.size < 1)
+                        if (newsAdapter.differ.currentList.size < 1)
                             binding.mainProgressBar.visibility = View.VISIBLE
                     } else
                         displayProgressBar(true)
@@ -107,14 +107,14 @@ class SearchFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        articleAdapter.setOnItemClickListener {
+        newsAdapter.setOnItemClickListener {
             val intent = Intent(requireActivity(), ArticleDetailActivity::class.java)
             intent.putExtra("article", it)
             startActivity(intent)
         }
         binding.articlesRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = articleAdapter
+            adapter = newsAdapter
             addOnScrollListener(this@SearchFragment.scrollListener)
         }
     }
