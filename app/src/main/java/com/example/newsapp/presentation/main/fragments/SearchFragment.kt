@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.databinding.FragmentSearchNewsBinding
-import com.example.newsapp.presentation.main.NewsAdapter
 import com.example.newsapp.domain.entities.ResponseDomain
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
 import com.example.newsapp.presentation.main.NewsActivity
+import com.example.newsapp.presentation.main.NewsAdapter
 import com.example.newsapp.presentation.main.NewsViewModel
 import com.example.newsapp.util.Constants
 import com.example.newsapp.util.Constants.Companion.SEARCH_NEWS_DELAY
@@ -31,7 +31,12 @@ import javax.inject.Named
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
 
-    private lateinit var binding: FragmentSearchNewsBinding
+
+    private var _binding: FragmentSearchNewsBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     lateinit var viewModel: NewsViewModel
 
@@ -46,7 +51,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchNewsBinding.inflate(layoutInflater)
+        _binding = FragmentSearchNewsBinding.inflate(layoutInflater)
 
         viewModel = (activity as NewsActivity).viewModel
 
@@ -174,5 +179,10 @@ class SearchFragment : Fragment() {
                 isScrolling = false
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

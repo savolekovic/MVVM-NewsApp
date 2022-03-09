@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.data.local.LocalMapper
+import com.example.newsapp.databinding.FragmentBreakingNewsBinding
 import com.example.newsapp.databinding.FragmentFavoritesBinding
 import com.example.newsapp.presentation.main.NewsAdapter
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
@@ -27,7 +28,10 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     @Inject
     lateinit var localMapper: LocalMapper
 
-    private lateinit var binding: FragmentFavoritesBinding
+    private var _binding: FragmentFavoritesBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     lateinit var viewModel: NewsViewModel
 
@@ -40,7 +44,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFavoritesBinding.inflate(layoutInflater)
+        _binding = FragmentFavoritesBinding.inflate(layoutInflater)
 
         viewModel = (activity as NewsActivity).viewModel
 
@@ -102,5 +106,10 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = newsAdapter
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

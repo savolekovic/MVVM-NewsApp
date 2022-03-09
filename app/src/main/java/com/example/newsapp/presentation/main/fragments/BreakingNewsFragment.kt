@@ -10,10 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.databinding.FragmentBreakingNewsBinding
-import com.example.newsapp.presentation.main.NewsAdapter
 import com.example.newsapp.domain.entities.ResponseDomain
 import com.example.newsapp.presentation.article_detail.ArticleDetailActivity
 import com.example.newsapp.presentation.main.NewsActivity
+import com.example.newsapp.presentation.main.NewsAdapter
 import com.example.newsapp.presentation.main.NewsViewModel
 import com.example.newsapp.util.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsapp.util.DataState
@@ -25,7 +25,11 @@ import javax.inject.Named
 @AndroidEntryPoint
 class BreakingNewsFragment : Fragment() {
 
-    private lateinit var binding: FragmentBreakingNewsBinding
+    private var _binding: FragmentBreakingNewsBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     lateinit var viewModel: NewsViewModel
 
@@ -38,7 +42,7 @@ class BreakingNewsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBreakingNewsBinding.inflate(layoutInflater)
+        _binding = FragmentBreakingNewsBinding.inflate(layoutInflater)
 
         viewModel = (activity as NewsActivity).viewModel
 
@@ -138,5 +142,10 @@ class BreakingNewsFragment : Fragment() {
                 isScrolling = false
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
